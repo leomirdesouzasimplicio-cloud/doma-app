@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMA v2 - Gestão de Rotina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DOMA</h1>
+            <p>O que está pesando na sua mente hoje?</p>
+        </header>
+        
+        <main>
+            <textarea id="userInput" placeholder="Descreva o que está na sua cabeça... reuniões, tarefas, preocupações."></textarea>
+            <button id="dominarBtn">Dominar →</button>
+            
+            <div id="loading" class="hidden">Analisando contexto com IA...</div>
+            
+            <div id="result" class="hidden">
+                <section>
+                    <h3>Prioridades Identificadas</h3>
+                    <div id="prioridades" class="content-box"></div>
+                </section>
+                <section>
+                    <h3>Sugestão de Agenda</h3>
+                    <div id="agenda" class="content-box"></div>
+                </section>
+                <div id="insight" class="insight-box"></div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
