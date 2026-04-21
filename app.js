@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyCmkfo7stZ8n3-Hnw45mKErIUD8l4gzS2Q";
+const API_KEY = "AIzaSyBpAT5mn1FWKp2dHBR0HQXkKgyC_6QIf1s";
 
 document.getElementById('dominarBtn').addEventListener('click', async function() {
     const input = document.getElementById('userInput').value;
