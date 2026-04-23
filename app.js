@@ -1,4 +1,6 @@
-const API_KEY = "AIzaSyBpAT5mn1FWKp2dHBR0HQXkKgyC_6QIf1s";
+
+// Substituímos a chave fixa pelo comando que lê a variável da Vercel
+const API_KEY = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_GEMINI_API_KEY : "";
 
 document.getElementById('dominarBtn').addEventListener('click', async function() {
     const input = document.getElementById('userInput').value;
@@ -8,13 +10,15 @@ document.getElementById('dominarBtn').addEventListener('click', async function()
     const loading = document.getElementById('loading');
     const result = document.getElementById('result');
     
-    // Interface de carregamento
     btn.disabled = true;
     loading.classList.remove('hidden');
     result.classList.add('hidden');
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        // Se a chave não vier da Vercel, o código tenta usar a lógica de fallback
+        const finalKey = API_KEY || "COLE_AQUI_A_SUA_CHAVE_NOVA_SE_QUISER_TESTAR_LOCAL";
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${finalKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -25,16 +29,20 @@ document.getElementById('dominarBtn').addEventListener('click', async function()
         });
 
         const data = await response.json();
+        
+        if (data.error) {
+             throw new Error(data.error.message);
+        }
+
         const fullResponse = data.candidates[0].content.parts[0].text;
 
-        // Separando a resposta para exibir nos campos certos
         document.getElementById('prioridades').innerText = "Análise concluída com sucesso!";
         document.getElementById('agenda').innerText = fullResponse;
         document.getElementById('insight').innerHTML = "💡 Inteligência Gemini Ativa.";
 
     } catch (error) {
         console.error(error);
-        alert("Erro ao conectar com a IA. Verifique se sua chave de API está correta.");
+        alert("Erro na IA: " + error.message);
     } finally {
         btn.disabled = false;
         loading.classList.add('hidden');
